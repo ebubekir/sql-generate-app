@@ -1,0 +1,13 @@
+[default]
+db.host = "0.0.0.0"
+db.name = "postgres"
+db.user = "postgres"
+db.password = "postgres"
+db.port = "5432"
+
+[production]
+db.host = "postgresql"
+db.name = "postgres"
+db.user = "postgres"
+db.password = "postgres"
+db.port = "5432"

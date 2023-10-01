@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "easy-dashboards-api"
+version = "0.0.1"
+description = ""
+authors = ["Ebubekir Karanfil <karanfilebubekir@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "easy_daashboards_api"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.103.1"
+uvicorn = "^0.23.2"
+sqlalchemy = "^2.0.21"
+alembic = "^1.12.0"
+psycopg2-binary = "^2.9.7"
+dynaconf = "^3.2.3"
+python-multipart = "^0.0.6"
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+pymysql = "^1.1.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
