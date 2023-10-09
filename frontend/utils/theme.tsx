@@ -1,9 +1,9 @@
-export function getCurrentTheme(): string | null {
+export function getCurrentTheme(): string {
   if (process.browser) {
     const root = window.document.getElementsByTagName('html')[0]
-    return root.getAttribute('data-theme')
+    return root.getAttribute('data-theme') || 'light'
   }
-  return null
+  return 'light'
 }
 
 export function switchTheme() {
