@@ -1,6 +1,7 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Gabarito } from 'next/font/google'
+import { RTKProvider } from '@/app/store'
 
 const inter = Gabarito({
   subsets: ['latin'],
@@ -15,7 +16,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang='en' data-theme='light'>
-      <body className={inter.className}>{children}</body>
+      <RTKProvider>
+        <body className={inter.className}>{children}</body>
+      </RTKProvider>
     </html>
   )
 }

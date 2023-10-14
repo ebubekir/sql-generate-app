@@ -9,5 +9,8 @@
   "plugins": [
     "@typescript-eslint"
   ],
-  "root": true
+  "root": true,
+  "rules": {
+    "@typescript-eslint/no-explicit-any": "off"
+  }
 }
