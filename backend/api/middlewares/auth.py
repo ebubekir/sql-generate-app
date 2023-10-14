@@ -1,6 +1,6 @@
 from lib.app import app
 from lib.database.orm import ORMBase
-from utils.exceptions import NOT_AUTH_EXCEPTION
+from lib.exceptions import NOT_AUTH_EXCEPTION
 from services.auth.user import verify_token
 from models.auth.user import User
 

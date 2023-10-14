@@ -1,5 +1,5 @@
 from lib.database.orm import ORMBase
-from utils.exceptions import NOT_FOUND_EXCEPTION
+from lib.exceptions import NOT_FOUND_EXCEPTION
 from models.data_source import DataSource
 
 

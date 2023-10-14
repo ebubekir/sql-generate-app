@@ -1,10 +1,11 @@
+import http
 from datetime import timedelta, datetime
 
 from schemas import auth as schemas
 from lib.database.orm import ORMBase
 from lib import settings
 from models import auth as models
-from utils import exceptions
+from lib import exceptions
 
 from jose import jwt
 from passlib.context import CryptContext
@@ -54,7 +55,15 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
 
 
 def add_user(user: schemas.AddUserSchema):
-    return ORMBase[models.User].create(models.User(**user.model_dump()))
+    check_user = ORMBase[models.User].get(
+        models.User.email == user.email, model=models.User
+    )
+    if check_user:
+        raise exceptions.CustomHTTPException(
+            status=http.HTTPStatus.CONFLICT, error_message="User already exists"
+        )
+    ORMBase[models.User].create(models.User(**user.model_dump()))
+    return user
 
 
 def login(email: str, password: str):
@@ -64,6 +73,13 @@ def login(email: str, password: str):
     if not verify_password(password, user.password):
         raise exceptions.NOT_AUTH_EXCEPTION
     return {
-        "access_token": create_access_token(data=dict(user_id=user.id)),
+        "access_token": create_access_token(
+            data=dict(
+                user_id=user.id,
+                full_name=user.full_name,
+                created_at=user.created_at.__str__(),
+                email=user.email,
+            )
+        ),
         "token_type": "bearer",
     }

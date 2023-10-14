@@ -6,9 +6,27 @@ from jose import jwt, JWTError
 from fastapi.exceptions import HTTPException
 from fastapi import FastAPI, APIRouter, Depends
 from fastapi.security import OAuth2PasswordBearer
+from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
+from lib import exceptions
 
+allowed_origins = ["http://localhost:3000"]
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=allowed_origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+@app.exception_handler(exceptions.CustomHTTPException)
+async def custom_http_exception_handler(request, exc):
+    return JSONResponse(status_code=exc.status_code, content=exc.detail)
+
 
 oauth_schema = OAuth2PasswordBearer(tokenUrl="/login", scheme_name="JWT")
 

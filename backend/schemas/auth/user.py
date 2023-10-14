@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr, Field
 from passlib.context import CryptContext
 from pydantic.functional_validators import AfterValidator
 
@@ -16,6 +16,6 @@ Password = Annotated[str, AfterValidator(hash_password)]
 
 
 class AddUserSchema(BaseModel):
-    email: str
+    email: EmailStr
     password: Password
-    full_name: str
+    full_name: str = Field(..., min_length=1)
