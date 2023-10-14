@@ -1,21 +1,32 @@
-import { NextAuthOptions } from 'next-auth'
+import NextAuth, { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
+import jwtDecode from 'jwt-decode'
 
 export const authOptions = {
   providers: [
     CredentialsProvider({
-      name: 'redentials',
+      name: 'credentials',
       credentials: {
-        username: { label: 'Username', type: 'text' },
-        password: { label: 'Password', type: 'password' },
+        email: { label: 'email', type: 'text' },
+        password: { label: 'password', type: 'password' },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         // Add logic here to look up the user from the credentials supplied
-        const user = { id: '1', name: 'J Smith', email: 'jsmith@example.com' }
-        console.log('debug point')
-        console.log('credentials', credentials)
-        console.log('req', req)
-        return user
+        const result = await fetch('http://0.0.0.0:8000/login', {
+          method: 'POST',
+          mode: 'cors',
+          cache: 'no-cache',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: `username=${credentials?.email}&password=${credentials?.password}`,
+        }).then((res) => res.json())
+
+        if (result?.status_code === 401) {
+          return null
+        }
+
+        return jwtDecode(result.access_token)
       },
     }),
   ],
@@ -31,4 +42,9 @@ export const authOptions = {
   pages: {
     signIn: '/login',
   },
+  secret: 'af56bb95311dbe3f95ed298353687aa89791804e2b59fbfdb9f21db7594ad43a',
 } satisfies NextAuthOptions
+
+const handler = NextAuth(authOptions)
+
+export { handler as GET, handler as POST }

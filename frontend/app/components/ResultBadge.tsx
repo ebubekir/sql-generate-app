@@ -19,7 +19,7 @@ const ResultBadge = ({
     return (
       <div className='alert alert-error text-white'>
         <ExclamationCircleIcon className='h-5 w-5' />
-        <span>{result?.error?.data?.error_message || 'An error occurred!'}</span>
+        <span>{result?.error?.data?.error_message || 'Error!'}</span>
       </div>
     )
   }

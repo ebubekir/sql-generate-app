@@ -1,3 +1,6 @@
+'use client'
+
+import { signOut } from 'next-auth/react'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -17,7 +20,7 @@ const ProfileSection = () => {
           <Link href={'/settings'}>Settings</Link>
         </li>
         <li>
-          <a>Logout</a>
+          <button onClick={() => signOut()}>Logout</button>
         </li>
       </ul>
     </div>
