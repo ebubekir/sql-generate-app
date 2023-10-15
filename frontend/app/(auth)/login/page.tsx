@@ -7,6 +7,7 @@ import { LoginForm } from '@/types/auth'
 import SubmitButton from '@/app/components/FormInputs/SubmitButton'
 import { signIn } from 'next-auth/react'
 import ResultBadge from '@/app/components/ResultBadge'
+import { useRouter } from 'next/navigation'
 
 interface LoginStates {
   isLoading: boolean
@@ -30,18 +31,21 @@ const LoginPage = () => {
     isLoading: false,
     isError: null,
   })
+  const router = useRouter()
 
   const onLoginClick = async () => {
     const result = await signIn('credentials', {
       ...inputs,
-      redirect: true,
-      callbackUrl: '/',
+      redirect: false,
     })
     if (result?.ok) {
+      router.push("/")
+      console.log('result', result)
       setLoginStates({
         isLoading: false,
         isError: null,
       })
+
     } else {
       setLoginStates({
         isLoading: false,

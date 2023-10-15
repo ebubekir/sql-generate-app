@@ -7,9 +7,14 @@ import Image from 'next/image'
 const ProfileSection = () => {
   return (
     <div className='dropdown-end dropdown'>
-      <label tabIndex={0} className='avatar btn btn-circle btn-ghost'>
+      <label tabIndex={0} className='avatar  btn btn-circle btn-ghost'>
         <div className='w-10 rounded-full'>
-          <Image src='/avatar.jpg' alt='profile-avatar' layout={'fill'} />
+          <Image
+            src='/avatar.jpg'
+            alt='profile-avatar'
+            layout={'fill'}
+            className='rounded-full'
+          />
         </div>
       </label>
       <ul

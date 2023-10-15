@@ -12,12 +12,11 @@ import { baseApi } from '@/services/base'
 
 export enum REDUCERS {
   api = 'api',
-  authReducer = "authReducer"
+  authReducer = 'authReducer',
 }
 
 const authReducer = createReducer({ loggedStatus: false, user: {} }, (builder) => {
-  builder.addCase('LOGIN', (state, action: { type: 'LOGIN'; user: object }) => {
-    state.loggedStatus = true
+  builder.addCase('USER', (state, action: { type: 'USER'; user: object }) => {
     state.user = action.user
   })
 })
@@ -32,12 +31,14 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(baseApi.middleware),
 })
 
-export const getState = (reducerName: string) => store.getState()[reducerName as keyof typeof store.getState]
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
 
+export const getState = (reducerName: string) =>
+  store.getState()[reducerName as keyof typeof store.getState]
 
-// Infer the `RootState` and `AppDispatch` types from the store itself
-// export type RootState = ReturnType<typeof rootReducer>
-
-export const RTKProvider = ({ children }: { children: React.ReactNode }) => (
+const RTKProvider = ({ children }: { children: React.ReactNode }) => (
   <Provider store={store}>{children}</Provider>
 )
+
+export default RTKProvider

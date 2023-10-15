@@ -1,9 +1,6 @@
-'use client'
-
 import './globals.css'
 import { Gabarito } from 'next/font/google'
-import { RTKProvider } from '@/app/store'
-import { SessionProvider } from 'next-auth/react'
+import Providers from '@/app/providers'
 
 const inter = Gabarito({
   subsets: ['latin'],
@@ -13,11 +10,9 @@ const inter = Gabarito({
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang='en' data-theme='light'>
-      <SessionProvider>
-        <RTKProvider>
-            <body className={inter.className}>{children}</body>
-        </RTKProvider>
-      </SessionProvider>
+      <Providers>
+        <body className={inter.className}>{children}</body>
+      </Providers>
     </html>
   )
 }

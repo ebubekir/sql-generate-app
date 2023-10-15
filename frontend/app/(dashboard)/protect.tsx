@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
-import Loading from '@/app/(dashboard)/components/loading'
+import LoadingFullScreen from '@/app/(dashboard)/components/LoadingFullScreen'
 
 const ProtectRoute = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter()
@@ -14,7 +14,7 @@ const ProtectRoute = ({ children }: { children: React.ReactNode }) => {
   })
 
   if (status === 'loading') {
-    return <Loading />
+    return <LoadingFullScreen />
   }
 
   return children

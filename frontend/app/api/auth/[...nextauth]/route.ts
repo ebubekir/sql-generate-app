@@ -11,7 +11,6 @@ export const authOptions = {
         password: { label: 'password', type: 'password' },
       },
       async authorize(credentials) {
-        // Add logic here to look up the user from the credentials supplied
         const result = await fetch('http://0.0.0.0:8000/login', {
           method: 'POST',
           mode: 'cors',
@@ -26,7 +25,10 @@ export const authOptions = {
           return null
         }
 
-        return jwtDecode(result.access_token)
+        return {
+          access_token: result.access_token,
+          ...jwtDecode(result.access_token),
+        }
       },
     }),
   ],
