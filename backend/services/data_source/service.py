@@ -1,9 +1,10 @@
 from lib.database.orm import ORMBase
 from lib.exceptions import NOT_FOUND_EXCEPTION
 from models.data_source import DataSource
+from lib.data_sources.base import DatabaseConnection
 
 
-from .dto import AddDataSourceRequestDto
+from .dto import AddDataSourceRequestDto, CheckCredentialsDto
 
 
 class DataSourceService:
@@ -14,10 +15,16 @@ class DataSourceService:
         data_source = DataSource(
             name=data_source.name,
             created_by_id=self.user.id,
-            credentials=data_source.credentials,
+            credentials=data_source.credentials.model_dump(),
             type=data_source.type,
         )
         return ORMBase[DataSource].create(data_source)
+
+    def check_connection(self, credentials: CheckCredentialsDto) -> bool:
+        data_source = DatabaseConnection.get_data_source_cls(
+            data_source_type=credentials.type, credentials=credentials.credentials
+        )
+        return data_source.check_connection()
 
     def list(self):
         return ORMBase[DataSource].get_all(

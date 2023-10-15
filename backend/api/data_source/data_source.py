@@ -1,7 +1,7 @@
 from lib import app
 from lib.app import create_router
 from services.data_source.service import DataSourceService
-from services.data_source.dto import AddDataSourceRequestDto
+from services.data_source.dto import AddDataSourceRequestDto, CheckCredentialsDto
 
 from fastapi import Request
 
@@ -12,6 +12,14 @@ router = create_router(auth=True)
 async def add_data_source(request: Request, data_source: AddDataSourceRequestDto):
     service = DataSourceService(user=request.user)
     return service.add(data_source=data_source)
+
+
+@router.post("/check-connection")
+async def check_data_source_connection(
+    request: Request, credentials: CheckCredentialsDto
+):
+    service = DataSourceService(user=request.user)
+    return service.check_connection(credentials=credentials)
 
 
 @router.get("/list")

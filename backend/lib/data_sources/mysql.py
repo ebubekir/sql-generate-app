@@ -9,9 +9,11 @@ class MySqlConnection(DatabaseConnection, name=DataSourceType.mysql.value):
         self.credentials = credentials
 
     def check_connection(self):
-        engine = self.get_engine(dialect=self.__dialect, **self.credentials.__dict__)
+        engine = self.get_engine(dialect=self.__dialect, credentials=self.credentials)
         try:
             engine.connect()
-            return True
-        except:
-            return False
+            return {
+                "connection_result": True,
+            }
+        except Exception as e:
+            return {"connection_result": False, "connection_error": e.__str__()}

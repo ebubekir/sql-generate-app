@@ -1,8 +1,13 @@
 from pydantic import BaseModel
 from models.data_source import DataSourceType
 
+from lib.data_sources.base import CredentialsSchema
 
-class AddDataSourceRequestDto(BaseModel):
-    name: str
-    credentials: dict
+
+class CheckCredentialsDto(BaseModel):
+    credentials: CredentialsSchema
     type: DataSourceType
+
+
+class AddDataSourceRequestDto(CheckCredentialsDto):
+    name: str

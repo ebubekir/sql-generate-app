@@ -1,11 +1,11 @@
 import sqlalchemy as sa
 
-from dataclasses import dataclass
+from pydantic import BaseModel
 from abc import ABC, abstractmethod
+from models.data_source import DataSourceType
 
 
-@dataclass
-class CredentialsSchema:
+class CredentialsSchema(BaseModel):
     host: str
     username: str
     password: str
@@ -25,7 +25,13 @@ class DatabaseConnection(ABC):
     def check_connection(self):
         pass
 
-    def get_engine(
-        self, dialect: str, username: str, password: str, host: str, port: str, db: str
-    ):
-        return sa.create_engine(f"{dialect}://{username}:{password}@{host}:{port}/{db}")
+    def get_engine(self, dialect: str, credentials: CredentialsSchema):
+        return sa.create_engine(
+            f"{dialect}://{credentials.username}:{credentials.password}@{credentials.host}:{credentials.port}/{credentials.db}"
+        )
+
+    @classmethod
+    def get_data_source_cls(cls, data_source_type: DataSourceType, *args, **kwargs):
+        if not data_source_type.value in cls.__DB__.keys():
+            raise NotImplementedError
+        return cls.__DB__[data_source_type.value](*args, **kwargs)
