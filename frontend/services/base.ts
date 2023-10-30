@@ -14,6 +14,8 @@ export const baseApi = createApi({
       if (NO_AUTH_ENDPOINTS.includes(endpoint)) {
         return headers
       }
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       const user = getState()['authReducer']
       const accToken = user.user.access_token
       headers.set("Authorization", `Bearer ${accToken}`)

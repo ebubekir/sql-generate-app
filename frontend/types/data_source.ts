@@ -15,7 +15,7 @@ export enum DataSourceType {
 
 export interface CheckConnectionSchema {
   credentials: CredentialsSchema
-  type: DataSourceType
+  type: DataSourceType | string
 }
 
 export interface AddDataSourceSchema extends CheckConnectionSchema {

@@ -10,6 +10,7 @@ export const authOptions = {
         email: { label: 'email', type: 'text' },
         password: { label: 'password', type: 'password' },
       },
+      // @ts-ignore
       async authorize(credentials) {
         const result = await fetch('http://0.0.0.0:8000/login', {
           method: 'POST',

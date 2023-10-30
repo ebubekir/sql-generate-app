@@ -1,19 +1,10 @@
 'use client'
 
 import { combineReducers, configureStore, createReducer } from '@reduxjs/toolkit/'
-import { Provider } from 'react-redux'
+import type { TypedUseSelectorHook } from 'react-redux'
+import { Provider, useSelector } from 'react-redux'
 import { baseApi } from '@/services/base'
-
-// const loginReducer = createReducer({ username: null, pasword: null }, (builder) => {
-//   builder.addCase('LOGIN', (state, action) => {
-//     state.user
-//   })
-// })
-
-export enum REDUCERS {
-  api = 'api',
-  authReducer = 'authReducer',
-}
+import { dataSourceReducer } from '@/app/(dashboard)/data-sources/add/reducer'
 
 const authReducer = createReducer({ loggedStatus: false, user: {} }, (builder) => {
   builder.addCase('USER', (state, action: { type: 'USER'; user: object }) => {
@@ -24,6 +15,7 @@ const authReducer = createReducer({ loggedStatus: false, user: {} }, (builder) =
 export const rootReducer = combineReducers({
   [baseApi.reducerPath]: baseApi.reducer,
   authReducer,
+  dataSourceReducer,
 })
 
 export const store = configureStore({
@@ -33,6 +25,8 @@ export const store = configureStore({
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
+
 
 export const getState = (reducerName: string) =>
   store.getState()[reducerName as keyof typeof store.getState]
