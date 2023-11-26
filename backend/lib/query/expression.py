@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Union
 from pydantic import BaseModel
 
 import sqlalchemy as sa
@@ -7,7 +7,7 @@ from sqlalchemy.sql import functions as F
 
 
 class Expression(BaseModel):
-    col: str | "Expression"
+    col: Union[str, "Expression"]
     col_operator: Optional[str]
 
     def render(self, t: Table):

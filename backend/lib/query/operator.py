@@ -10,3 +10,8 @@ class Operator(enum.Enum):
     le = "__le__"
     in_ = "in_"
     between = "between"
+
+
+class LogicalOperator(enum.Enum):
+    and_ = "and_"
+    or_ = "or_"
