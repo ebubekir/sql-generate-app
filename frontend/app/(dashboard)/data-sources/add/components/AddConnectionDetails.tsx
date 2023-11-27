@@ -28,6 +28,10 @@ const AddConnectionDetails = () => {
       />
       <TextInput label={'Database'} onChange={(e) => updateState('db', e.target.value)} />
       <TextInput label={'Port'} onChange={(e) => updateState('port', e.target.value)} />
+      <TextInput
+        label={'Schema'}
+        onChange={(e) => updateState('schema', e.target.value)}
+      />
     </div>
   )
 }

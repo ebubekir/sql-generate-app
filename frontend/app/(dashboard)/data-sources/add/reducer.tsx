@@ -14,6 +14,7 @@ interface PayloadSchema {
     password?: string
     db?: string
     port?: string
+    schema?: string
   }
   dataSourceType: DataSourceType | string
   dataSourceName: string
@@ -29,6 +30,7 @@ const initialState: PayloadSchema = {
     password: '',
     db: '',
     port: '',
+    schema: '',
   },
   dataSourceType: '',
   dataSourceName: '',
@@ -87,7 +89,7 @@ export const dataSourceReducer = createReducer(initialState, (builder) => {
         action: PayloadAction<
           {
             type: string
-            key: 'host' | 'username' | 'password' | 'db' | 'port'
+            key: 'host' | 'username' | 'password' | 'db' | 'port' | 'schema'
             value: string
           },
           'dispatchConnectionDetails'
