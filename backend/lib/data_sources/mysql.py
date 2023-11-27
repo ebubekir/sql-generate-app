@@ -3,13 +3,13 @@ from .base import CredentialsSchema, DatabaseConnection
 
 
 class MySqlConnection(DatabaseConnection, name=DataSourceType.mysql.value):
-    __dialect = "mysql+pymysql"
+    _dialect = "mysql+pymysql"
 
     def __init__(self, credentials: CredentialsSchema):
-        self.credentials = credentials
+        super().__init__(credentials)
 
     def check_connection(self):
-        engine = self.get_engine(dialect=self.__dialect, credentials=self.credentials)
+        engine = self.get_engine()
         try:
             engine.connect()
             return {

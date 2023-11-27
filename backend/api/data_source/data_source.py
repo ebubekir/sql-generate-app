@@ -41,4 +41,35 @@ async def get_data_source_detail(request: Request, data_source_id: int):
     return service.get(data_source_id=data_source_id)
 
 
+@router.get("/table-list")
+async def get_table_list_of_data_source(request: Request, data_source_id: int):
+    service = DataSourceService(user=request.user)
+    return service.get_table_list(data_source_id=data_source_id)
+
+
+@router.get("/column-list")
+async def get_column_list_of_table(
+    request: Request, table_name: str, data_source_id: int
+):
+    service = DataSourceService(user=request.user)
+    return service.get_column_list(data_source_id=data_source_id, table_name=table_name)
+
+
+@router.get("/column-values")
+async def get_column_values(
+    request: Request,
+    table_name: str,
+    data_source_id: int,
+    column_name: str,
+    search_query: str = None,
+):
+    service = DataSourceService(user=request.user)
+    return service.get_column_values(
+        data_source_id=data_source_id,
+        table_name=table_name,
+        column_name=column_name,
+        search_query=search_query,
+    )
+
+
 app.include_router(router, prefix="/data-source", tags=["data-source"])

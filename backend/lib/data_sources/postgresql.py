@@ -3,13 +3,13 @@ from .base import CredentialsSchema, DatabaseConnection
 
 
 class PostgreSqlConnection(DatabaseConnection, name=DataSourceType.postgresql.value):
-    __dialect = "postgresql"
+    _dialect = "postgresql"
 
     def __init__(self, credentials: CredentialsSchema):
-        self.credentials = credentials
+        super().__init__(credentials)
 
     def check_connection(self):
-        engine = self.get_engine(dialect=self.__dialect, credentials=self.credentials)
+        engine = self.get_engine()
         try:
             engine.connect()
             return {"connection_result": True}
