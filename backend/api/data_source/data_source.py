@@ -35,6 +35,12 @@ async def get_all_data_sources(request: Request):
     ]
 
 
+@router.put("/set-as-default")
+async def set_as_default_data_source(request: Request, data_source_id: int):
+    service = DataSourceService(user=request.user)
+    return service.set_as_default_data_source(data_source_id)
+
+
 @router.get("/detail")
 async def get_data_source_detail(request: Request, data_source_id: int):
     service = DataSourceService(user=request.user)

@@ -68,6 +68,21 @@ class DataSourceService:
 
         return [{**c, **dict(type=str(c["type"]))} for c in columns]
 
+    def set_as_default_data_source(self, data_source_id: int):
+        ORMBase[DataSource].update_all(
+            DataSource.id == data_source_id,
+            set_list=dict(is_default=True),
+            model=DataSource,
+        )
+
+        ORMBase[DataSource].update_all(
+            DataSource.id != data_source_id,
+            set_list=dict(is_default=False),
+            model=DataSource,
+        )
+
+        return True
+
     def get_column_values(
         self,
         table_name: str,
