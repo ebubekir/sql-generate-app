@@ -32,5 +32,6 @@ export interface DataSource extends BaseSchema {
   id: number,
   created_by_id: number,
   name: string,
-  type: DataSourceType
+  type: DataSourceType,
+  is_default: boolean
 }

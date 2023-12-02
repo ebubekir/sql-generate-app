@@ -6,10 +6,12 @@ const ListArea = ({
   isLoading,
   error,
   data,
+  onSetAsDefaultClick,
 }: {
   isLoading: boolean
   error?: object
   data?: any
+  onSetAsDefaultClick: (id: number) => void
 }) => {
   if (isLoading) {
     return <Loading />
@@ -22,7 +24,7 @@ const ListArea = ({
   if (data) {
     return (
       <div className='py-8'>
-        <DataSourceTable data={data} />
+        <DataSourceTable data={data} onSetAsDefaultClick={onSetAsDefaultClick} />
       </div>
     )
   }

@@ -22,8 +22,15 @@ export const dataSourceApi = baseApi.injectEndpoints({
         body: { ...connectionCheckCredentials },
       }),
     }),
-    listDataSource: builder.query<DataSource[] | [], undefined>({
+    listDataSource: builder.query<DataSource[] | [], any>({
       query: () => 'data-source/list',
+    }),
+    setAsDefaultDataSource: builder.mutation<boolean, number>({
+      query: (data_source_id: number) => ({
+        url: 'data-source/set-as-default',
+        method: 'PUT',
+        params: { data_source_id },
+      }),
     }),
   }),
 })
@@ -32,6 +39,8 @@ export const {
   useAddDataSourceMutation,
   useCheckConnectionMutation,
   useListDataSourceQuery,
+  useSetAsDefaultDataSourceMutation,
+  useLazyListDataSourceQuery,
 } = dataSourceApi
 
 export const {
