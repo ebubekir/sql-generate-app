@@ -19,7 +19,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     <ProtectRoute>
       <div>
         <Navbar />
-        <div className='pl-6 pt-4'>
+        <div className='px-6 pt-4'>
           <BreadCrumb pathname={pathname} />
           {children}
         </div>

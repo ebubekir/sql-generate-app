@@ -32,15 +32,46 @@ export const dataSourceApi = baseApi.injectEndpoints({
         params: { data_source_id },
       }),
     }),
+    getTableList: builder.query<string[], any>({
+      query: () => 'data-source/table-list',
+    }),
+    getColumnList: builder.query<
+      {
+        name: string
+        type: string
+        nullable: boolean
+        default?: null | any
+        autoincrement: boolean
+        comment?: null | string
+      }[],
+      any
+    >({
+      query: (table_name) => ({
+        url: 'data-source/column-list',
+        params: { table_name },
+      }),
+    }),
+    getColumnValues: builder.query<string[], { table_name: string; column_name: string }>(
+      {
+        query: ({ table_name, column_name }) => ({
+          url: 'data-source/column-values',
+          params: { table_name, column_name },
+        }),
+      }
+    ),
   }),
 })
+
 
 export const {
   useAddDataSourceMutation,
   useCheckConnectionMutation,
-  useListDataSourceQuery,
   useSetAsDefaultDataSourceMutation,
   useLazyListDataSourceQuery,
+  useGetTableListQuery,
+  useLazyGetColumnListQuery,
+  useGetColumnListQuery,
+  useGetColumnValuesQuery
 } = dataSourceApi
 
 export const {

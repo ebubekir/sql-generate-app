@@ -5,6 +5,7 @@ import type { TypedUseSelectorHook } from 'react-redux'
 import { Provider, useSelector } from 'react-redux'
 import { baseApi } from '@/services/base'
 import { dataSourceReducer } from '@/app/(dashboard)/data-sources/add/reducer'
+import { rootReportReducer } from '@/app/(dashboard)/new-report/reducer'
 
 const authReducer = createReducer({ loggedStatus: false, user: {} }, (builder) => {
   builder.addCase('USER', (state, action: { type: 'USER'; user: object }) => {
@@ -16,11 +17,12 @@ export const rootReducer = combineReducers({
   [baseApi.reducerPath]: baseApi.reducer,
   authReducer,
   dataSourceReducer,
+  rootReportReducer,
 })
-
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(baseApi.middleware),
+  devTools: true
 })
 
 export type RootState = ReturnType<typeof store.getState>
