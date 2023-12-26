@@ -14,6 +14,15 @@ class DataSourceService:
     def __init__(self, user):
         self.user = user
 
+    @staticmethod
+    def get_default_data_source(user_id: int):
+        data_source = ORMBase[DataSource].get(
+            DataSource.created_by_id == user_id,
+            DataSource.is_default == True,
+            model=DataSource,
+        )
+        return data_source
+
     def add(self, data_source: AddDataSourceRequestDto):
         data_source = DataSource(
             name=data_source.name,
@@ -23,7 +32,7 @@ class DataSourceService:
         )
         return ORMBase[DataSource].create(data_source)
 
-    def _get_connection(self, data_source_id: int):
+    def get_connection(self, data_source_id: int):
         data_source = self.get(data_source_id)
         connection = DatabaseConnection.get_data_source_cls(
             data_source_type=data_source.get("type"),
@@ -54,14 +63,18 @@ class DataSourceService:
             if k != "_sa_instance_state" and not k.startswith("__")
         }
 
-    def get_table_list(self, data_source_id: int):
-        connection = self._get_connection(data_source_id)
+    def get_table_list(self, data_source_id: int = None):
+        if not data_source_id:
+            data_source_id = DataSourceService.get_default_data_source(self.user.id).id
+        connection = self.get_connection(data_source_id)
         table_names = [t for t in connection.get_table_list()]
 
         return table_names
 
-    def get_column_list(self, data_source_id: int, table_name: str):
-        connection = self._get_connection(data_source_id)
+    def get_column_list(self, table_name: str, data_source_id: int = None):
+        if not data_source_id:
+            data_source_id = DataSourceService.get_default_data_source(self.user.id).id
+        connection = self.get_connection(data_source_id)
         engine = connection.get_engine()
         inspector = sa.inspect(engine)
         columns = inspector.get_columns(table_name)
@@ -86,11 +99,13 @@ class DataSourceService:
     def get_column_values(
         self,
         table_name: str,
-        data_source_id: int,
         column_name: str,
+        data_source_id: int = None,
         search_query: str = None,
     ):
-        connection = self._get_connection(data_source_id)
+        if not data_source_id:
+            data_source_id = DataSourceService.get_default_data_source(self.user.id).id
+        connection = self.get_connection(data_source_id)
         query = Query(
             selections=[
                 Expression(col=column_name, col_operator="distinct", label="values")

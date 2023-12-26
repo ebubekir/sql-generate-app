@@ -8,11 +8,14 @@ from .query_helper import QueryHelper
 
 
 class Query(BaseModel):
-    selections: List[Expression]
+    selections: List[Expression] = Field(default=None)
     conditions: Union["WhereGroup", "WhereClause"] = Field(default=None)
 
     def render(self, t, return_query: bool = False):
-        select_list = [s.render(t) for s in self.selections]
+        if self.selections:
+            select_list = [s.render(t) for s in self.selections]
+        else:
+            select_list = [sa.text("*")]
 
         q = sa.select(*select_list).select_from(t)
 

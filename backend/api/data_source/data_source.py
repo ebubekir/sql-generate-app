@@ -48,14 +48,14 @@ async def get_data_source_detail(request: Request, data_source_id: int):
 
 
 @router.get("/table-list")
-async def get_table_list_of_data_source(request: Request, data_source_id: int):
+async def get_table_list_of_data_source(request: Request, data_source_id: int = None):
     service = DataSourceService(user=request.user)
     return service.get_table_list(data_source_id=data_source_id)
 
 
 @router.get("/column-list")
 async def get_column_list_of_table(
-    request: Request, table_name: str, data_source_id: int
+    request: Request, table_name: str, data_source_id: int = None
 ):
     service = DataSourceService(user=request.user)
     return service.get_column_list(data_source_id=data_source_id, table_name=table_name)
@@ -65,9 +65,9 @@ async def get_column_list_of_table(
 async def get_column_values(
     request: Request,
     table_name: str,
-    data_source_id: int,
     column_name: str,
     search_query: str = None,
+    data_source_id: int = None,
 ):
     service = DataSourceService(user=request.user)
     return service.get_column_values(
