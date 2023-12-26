@@ -18,13 +18,9 @@ const FinishSetup = () => {
       credentials: dataSourceCredentials,
       type: dataSourceType,
       name: dataSourceName,
+    }).then(() => {
+      router.replace('/data-sources/list')
     })
-      .then(() => {
-        router.replace('/data-sources/list')
-      })
-      .catch(() => {
-        console.log('error')
-      })
   }
 
   return (

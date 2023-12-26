@@ -1,7 +1,6 @@
 'use client'
 
 import { createAction, createReducer, PayloadAction } from '@reduxjs/toolkit/'
-import { getState } from '@/app/store'
 import { DataSourceType } from '@/types/data_source'
 
 const nextStep = createAction('nextStep')
@@ -117,5 +116,3 @@ export const dataSourceReducer = createReducer(initialState, (builder) => {
       }
     )
 })
-
-export const useDataSourceReducer = () => getState('dataSourceReducer')
