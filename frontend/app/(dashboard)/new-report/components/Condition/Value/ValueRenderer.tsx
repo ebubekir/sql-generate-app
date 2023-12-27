@@ -29,7 +29,7 @@ const ValueRenderer = ({
     Component = OP_COMPONENTS[type]
   } else {
     // @ts-ignore
-    Component = OP_COMPONENTS[type]
+    Component = OP_COMPONENTS.VARCHAR
   }
 
   return <Component operator={operator} col={col} tableName={tableName} onChange={onChange} />

@@ -9,7 +9,7 @@ const ConditionList = () => {
   const dispatch = useDispatch()
 
   return (
-    <CollapseArea title={'2. Conditions'}>
+    <CollapseArea title={'3. Conditions'}>
       where...
       <div className='mb-4 flex flex-col space-y-4'>
         {Object.keys(conditions).map((i) => (

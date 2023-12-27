@@ -15,7 +15,7 @@ interface GenerateQuery {
 
 export const generateQueryRequest = ({
   tableName,
-  // columnList,
+  columnList,
   conditions,
 }: {
   tableName: string
@@ -29,6 +29,7 @@ export const generateQueryRequest = ({
   }
 }): GenerateQuery => {
   let whereGroup: WhereGroup | undefined = undefined
+  let selections: Array<Expression> | undefined = undefined
   try {
     if (conditions) {
       const conditionList: Array<WhereClause> = []
@@ -46,6 +47,13 @@ export const generateQueryRequest = ({
         op: LogicalOperator.and,
       }
     }
+
+    if (columnList) {
+      selections = columnList.map(c => ({
+        col: c
+      }))
+    }
+
   } catch (e) {
     console.error('Condition error!!!', e)
   }
@@ -54,6 +62,7 @@ export const generateQueryRequest = ({
     tableName,
     query: {
       conditions: whereGroup,
+      selections
     },
   }
 }

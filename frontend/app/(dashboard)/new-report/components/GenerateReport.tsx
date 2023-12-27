@@ -18,6 +18,7 @@ const GenerateReport = () => {
       const query = generateQueryRequest({
         tableName: reportReducer.tableName,
         conditions: getCorrectConditions(conditionReducer),
+        columnList: reportReducer.columnList,
       })
       generateQuery(query)
     }
