@@ -33,7 +33,7 @@ class DataSourceService:
         return ORMBase[DataSource].create(data_source)
 
     def get_connection(self, data_source_id: int):
-        data_source = self.get(data_source_id)
+        data_source = DataSourceService.get(data_source_id)
         connection = DatabaseConnection.get_data_source_cls(
             data_source_type=data_source.get("type"),
             credentials=CredentialsSchema(**data_source["credentials"]),
@@ -51,7 +51,8 @@ class DataSourceService:
             DataSource.created_by_id == self.user.id, model=DataSource
         )
 
-    def get(self, data_source_id: int):
+    @staticmethod
+    def get(data_source_id: int):
         data_source = ORMBase[DataSource].get(
             DataSource.id == data_source_id, model=DataSource
         )
@@ -74,10 +75,13 @@ class DataSourceService:
     def get_column_list(self, table_name: str, data_source_id: int = None):
         if not data_source_id:
             data_source_id = DataSourceService.get_default_data_source(self.user.id).id
+        data_source = DataSourceService.get(data_source_id=data_source_id)
         connection = self.get_connection(data_source_id)
         engine = connection.get_engine()
         inspector = sa.inspect(engine)
-        columns = inspector.get_columns(table_name)
+        columns = inspector.get_columns(
+            table_name, schema=data_source["credentials"]["schema"]
+        )
 
         return [{**c, **dict(type=str(c["type"]))} for c in columns]
 
