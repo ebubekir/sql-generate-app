@@ -8,7 +8,10 @@ import { getCorrectConditions } from '@/app/(dashboard)/new-report/components/Co
 const GenerateReport = () => {
   const conditionReducer = useConditionReducer()
   const reportReducer = useReportReducer()
-  const [generateQuery, result] = useGenerateQueryMutation()
+
+  const [generateQuery, result] = useGenerateQueryMutation({
+    fixedCacheKey: 'query-result',
+  })
 
   const onGenerateBtnClick = () => {
     if (reportReducer.tableName) {
@@ -23,7 +26,7 @@ const GenerateReport = () => {
   return (
     <button
       disabled={!reportReducer.tableName || result.isLoading}
-      className='btn btn-info'
+      className='btn btn-info text-white'
       onClick={onGenerateBtnClick}
     >
       Generate

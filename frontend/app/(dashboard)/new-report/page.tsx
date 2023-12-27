@@ -3,11 +3,9 @@
 import TableList from '@/app/(dashboard)/new-report/components/TableList'
 import ConditionList from '@/app/(dashboard)/new-report/components/ConditionList'
 import GenerateReport from '@/app/(dashboard)/new-report/components/GenerateReport'
-import { useReportReducer } from '@/app/(dashboard)/new-report/reducer'
+import Result from '@/app/(dashboard)/new-report/components/Result/Result'
 
 const NewReportPage = () => {
-  const { result } = useReportReducer()
-
   return (
     <div className='flex space-x-2'>
       <div className='flex w-1/3 flex-col space-y-4 '>
@@ -15,9 +13,7 @@ const NewReportPage = () => {
         <ConditionList />
         <GenerateReport />
       </div>
-      <div className='w-full bg-secondary'>
-        <pre>{result?.isLoading}</pre>
-      </div>
+      <Result />
     </div>
   )
 }

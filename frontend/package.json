@@ -21,6 +21,7 @@
     "next": "13.5.4",
     "next-auth": "^4.23.2",
     "react": "^18",
+    "react-code-blocks": "^0.1.5",
     "react-date-range": "^1.4.0",
     "react-datepicker": "^4.25.0",
     "react-dom": "^18",
