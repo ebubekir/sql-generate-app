@@ -1,6 +1,5 @@
 from .expression import Expression
 from .operator import Operator, LogicalOperator
-from .query import Query
 
 import enum
 import sqlalchemy as sa
@@ -33,7 +32,7 @@ class WhereClause(BaseModel):
 
     col: Expression
     op: Operator
-    value: str | int | float | bool | List[Any] | "Query"
+    value: str | int | float | bool | List[Any] | Expression
 
     def render(self, t):
         _value = self.value
@@ -42,7 +41,7 @@ class WhereClause(BaseModel):
         if self.op == Operator.between:
             return col_expr(*self.value)
 
-        if isinstance(self.value, Query):
+        if isinstance(self.value, Expression):
             _value = self.value.render(t)
 
         return col_expr(_value)

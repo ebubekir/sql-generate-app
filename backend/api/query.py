@@ -1,11 +1,10 @@
 from fastapi import Request
 
 from lib.app import create_router, app
-from lib.query.query import Query
 import time
 from services.query import GenerateQueryDto, QueryService
 
-router = create_router()
+router = create_router(auth=True)
 
 
 @router.post("/generate")

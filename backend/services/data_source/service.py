@@ -1,3 +1,4 @@
+import typing
 import sqlalchemy as sa
 
 from lib.database.orm import ORMBase
@@ -84,6 +85,19 @@ class DataSourceService:
         )
 
         return [{**c, **dict(type=str(c["type"]))} for c in columns]
+
+    def get_column_list_of_tables(
+        self, table_name_list: typing.List[str], data_source_id: int = None
+    ):
+        if not data_source_id:
+            data_source_id = DataSourceService.get_default_data_source(self.user.id).id
+
+        column_list = {}
+        for table_name in table_name_list:
+            column_list[table_name] = self.get_column_list(
+                table_name=table_name, data_source_id=data_source_id
+            )
+        return column_list
 
     def set_as_default_data_source(self, data_source_id: int):
         ORMBase[DataSource].update_all(

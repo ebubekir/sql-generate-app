@@ -1,9 +1,11 @@
+import typing
+
 from lib import app
 from lib.app import create_router
 from services.data_source.service import DataSourceService
 from services.data_source.dto import AddDataSourceRequestDto, CheckCredentialsDto
 
-from fastapi import Request
+from fastapi import Request, Query
 
 router = create_router(auth=True)
 
@@ -55,10 +57,24 @@ async def get_table_list_of_data_source(request: Request, data_source_id: int = 
 
 @router.get("/column-list")
 async def get_column_list_of_table(
-    request: Request, table_name: str, data_source_id: int = None
+    request: Request,
+    table_name: str,
+    data_source_id: int = None,
 ):
     service = DataSourceService(user=request.user)
     return service.get_column_list(data_source_id=data_source_id, table_name=table_name)
+
+
+@router.get("/column-list-from-tables")
+async def get_column_list_from_the_list_of_the_tables(
+    request: Request,
+    table_name_list: typing.List[str] = Query(...),
+    data_source_id: int = None,
+):
+    service = DataSourceService(user=request.user)
+    return service.get_column_list_of_tables(
+        table_name_list=table_name_list, data_source_id=data_source_id
+    )
 
 
 @router.get("/column-values")
