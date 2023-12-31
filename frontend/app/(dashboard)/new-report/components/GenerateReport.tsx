@@ -1,4 +1,5 @@
 import {
+  getCorrectJoinsList,
   useConditionReducer,
   useReportReducer,
 } from '@/app/(dashboard)/new-report/reducer'
@@ -19,6 +20,7 @@ const GenerateReport = () => {
         tableName: reportReducer.tableName,
         conditions: getCorrectConditions(conditionReducer),
         columnList: reportReducer.columnList,
+        joinsList: getCorrectJoinsList(reportReducer.joinsList),
       })
       generateQuery(query)
     }

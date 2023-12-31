@@ -24,7 +24,7 @@ export enum LogicalOperator {
 export interface WhereClause {
   col: Expression
   op: Operator
-  value: string | number | boolean | Array<any>
+  value: string | number | boolean | Array<any> | Expression
 }
 
 export interface WhereGroup {
@@ -32,7 +32,13 @@ export interface WhereGroup {
   op: LogicalOperator
 }
 
+export interface InnerJoin {
+  table_name: string
+  where_clause: WhereClause
+}
+
 export interface Query {
   selections?: Array<Expression>
   conditions?: WhereGroup | WhereClause
+  inner_joins?: Array<InnerJoin>
 }

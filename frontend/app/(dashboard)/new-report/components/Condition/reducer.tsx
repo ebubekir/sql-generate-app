@@ -46,7 +46,7 @@ export const conditionReducer = createReducer(initialState, (builder) => {
             id: number,
             type: string
             column: {
-              name: string,
+              value: string,
               type: string
             }
           },
@@ -55,7 +55,7 @@ export const conditionReducer = createReducer(initialState, (builder) => {
       ) => {
         const componentId = action.payload.id
         state[componentId].col = {
-          col: action.payload.column.name
+          col: action.payload.column.value
         }
         state[componentId].colType = action.payload.column.type
         state[componentId].availableOperators = getAvailableOperators(action.payload.column.type)
@@ -93,6 +93,5 @@ export const conditionReducer = createReducer(initialState, (builder) => {
         op: undefined,
         value: undefined
       }
-
     })
 })

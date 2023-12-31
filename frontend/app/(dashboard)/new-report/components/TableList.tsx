@@ -1,14 +1,15 @@
 'use client'
 
-import { useGetTableListQuery, useLazyGetColumnListQuery } from '@/services/data_source'
+import { useGetTableListQuery } from '@/services/data_source'
 import SelectOption from '@/app/components/FormInputs/Select'
 import CollapseArea from '@/app/(dashboard)/new-report/components/CollapseArea'
 import { useDispatch } from 'react-redux'
+import AddJoinButton from '@/app/(dashboard)/new-report/components/InnerJoin/AddJoinButton'
+import JoinsList from '@/app/(dashboard)/new-report/components/InnerJoin/JoinsList'
 
 const TableList = () => {
   const { data, isLoading } = useGetTableListQuery(undefined)
   const dispatch = useDispatch()
-  const [updateColumnList] = useLazyGetColumnListQuery()
 
   return (
     <CollapseArea title={'1. Select a Table...'}>
@@ -26,9 +27,17 @@ const TableList = () => {
               table: val.value,
             },
           })
-          updateColumnList(val.value)
+          dispatch({
+            type: 'addTableToTableList',
+            payload: {
+              tableName: val.value,
+              index: 0,
+            },
+          })
         }}
       />
+      <AddJoinButton />
+      <JoinsList />
     </CollapseArea>
   )
 }

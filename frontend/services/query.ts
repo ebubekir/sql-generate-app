@@ -1,6 +1,7 @@
 import { baseApi } from '@/services/base'
 import {
   Expression,
+  InnerJoin,
   LogicalOperator,
   Operator,
   Query,
@@ -17,6 +18,7 @@ export const generateQueryRequest = ({
   tableName,
   columnList,
   conditions,
+  joinsList,
 }: {
   tableName: string
   columnList?: string[]
@@ -27,9 +29,11 @@ export const generateQueryRequest = ({
       value: string | number | boolean | Array<string | number | boolean>
     }
   }
+  joinsList: Array<InnerJoin>
 }): GenerateQuery => {
   let whereGroup: WhereGroup | undefined = undefined
   let selections: Array<Expression> | undefined = undefined
+  let innerJoins: Array<InnerJoin> | undefined = undefined
   try {
     if (conditions) {
       const conditionList: Array<WhereClause> = []
@@ -54,6 +58,14 @@ export const generateQueryRequest = ({
       }))
     }
 
+    if (joinsList.length > 0) {
+      innerJoins = joinsList.map((join) => ({
+        table_name: join.table_name,
+        where_clause: join.where_clause
+      }))
+    }
+
+
   } catch (e) {
     console.error('Condition error!!!', e)
   }
@@ -62,7 +74,8 @@ export const generateQueryRequest = ({
     tableName,
     query: {
       conditions: whereGroup,
-      selections
+      selections,
+      inner_joins: innerJoins
     },
   }
 }

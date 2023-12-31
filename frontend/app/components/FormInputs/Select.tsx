@@ -7,8 +7,13 @@ interface Option {
   value: string | number | null
 }
 
+interface GroupOptions {
+  label: string,
+  options: Option[]
+}
+
 interface SelectProps {
-  options?: Array<Option>
+  options?: Array<Option> | GroupOptions[]
   onChange?: (val: any) => void
   isDisabled?: boolean
   isClearable?: boolean

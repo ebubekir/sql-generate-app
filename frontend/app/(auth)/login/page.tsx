@@ -40,7 +40,6 @@ const LoginPage = () => {
     })
     if (result?.ok) {
       router.push("/")
-      console.log('result', result)
       setLoginStates({
         isLoading: false,
         isError: null,

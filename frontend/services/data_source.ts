@@ -51,6 +51,25 @@ export const dataSourceApi = baseApi.injectEndpoints({
         params: { table_name },
       }),
     }),
+    getColumnListFromMultipleTables: builder.query<
+      {
+        [tableName: string]: {
+          name: string
+          type: string
+          nullable: boolean
+          default?: null | any
+          autoincrement: boolean
+          comment?: null | string
+        }[]
+      },
+      string[]
+    >({
+      query: (tableNameList) => {
+        const params = new URLSearchParams()
+        tableNameList.forEach((tableName) => params.append('table_name_list', tableName))
+        return `data-source/column-list-from-tables?${params}`
+      },
+    }),
     getColumnValues: builder.query<string[], { table_name: string; column_name: string }>(
       {
         query: ({ table_name, column_name }) => ({
@@ -62,7 +81,6 @@ export const dataSourceApi = baseApi.injectEndpoints({
   }),
 })
 
-
 export const {
   useAddDataSourceMutation,
   useCheckConnectionMutation,
@@ -71,7 +89,9 @@ export const {
   useGetTableListQuery,
   useLazyGetColumnListQuery,
   useGetColumnListQuery,
-  useGetColumnValuesQuery
+  useGetColumnValuesQuery,
+  useLazyGetColumnListFromMultipleTablesQuery,
+  useGetColumnListFromMultipleTablesQuery
 } = dataSourceApi
 
 export const {
