@@ -9,6 +9,7 @@ class ReportType(enum.Enum):
     line = "LINE"
     pie = "PIE"
     bar = "BAR"
+    sql = "SQL"
 
 
 class Report(Base):

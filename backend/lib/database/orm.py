@@ -10,7 +10,7 @@ Session = sessionmaker(bind=engine)
 
 
 @contextmanager
-def get_session() -> SASession:
+def get_session() -> Session:
     session = Session()
     try:
         yield session
@@ -32,10 +32,10 @@ class ORMBase(Generic[T]):
     def get(*criteria, model: Base):
         with get_session() as session:
             stmt = sa.select(model).filter(*criteria)
-            user_obj = session.scalars(stmt).one_or_none()
-            if not user_obj:
+            obj = session.scalars(stmt).one_or_none()
+            if not obj:
                 return None
-            return type("tmp" + model.__name__, (object,), user_obj.__dict__)
+            return type("tmp" + model.__name__, (object,), obj.__dict__)
 
     @staticmethod
     def get_all(*criteria, model: Base):
@@ -52,9 +52,9 @@ class ORMBase(Generic[T]):
             return session.add(row)
 
     @staticmethod
-    def delete(*criteria):
+    def delete(*criteria, model: Base):
         with get_session() as session:
-            stmt = sa.delete(T).where(*criteria)
+            stmt = sa.delete(model).where(*criteria)
             return session.execute(stmt)
 
     @staticmethod
