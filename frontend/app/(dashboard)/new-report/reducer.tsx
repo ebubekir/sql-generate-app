@@ -16,11 +16,13 @@ interface ReportReducerStateSchema {
       value?: string
     }
   }[]
+  saveModal: boolean
 }
 
 const initialState: ReportReducerStateSchema = {
   joinsList: [],
   tableList: [],
+  saveModal: false
 }
 
 export const getCorrectJoinsList = (
@@ -49,9 +51,6 @@ export const getCorrectJoinsList = (
       }
     }
   })
-
-  console.log('correctJoins', correctJoins)
-
   return correctJoins
 }
 
@@ -138,6 +137,9 @@ export const reportReducer = createReducer(initialState, (builder) => {
         state.joinsList = tmpArr
       }
     )
+    .addCase('toggleSaveModal', (state) => {
+      state.saveModal = !state.saveModal
+    })
 })
 
 export const rootReportReducer = combineReducers({
