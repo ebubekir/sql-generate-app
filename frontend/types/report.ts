@@ -1,3 +1,5 @@
+import { GenerateQuery } from '@/services/query'
+
 export enum ReportType {
   table = 'TABLE',
   line = 'LINE',
@@ -21,8 +23,9 @@ export interface Report {
   name: string
   description?: string | null
   created_by_id: number
-  config: object
+  config: GenerateQuery
   data_source_id: number
+  type: ReportType
 }
 
 

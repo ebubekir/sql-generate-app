@@ -9,7 +9,7 @@ import {
   WhereGroup,
 } from '@/types/query'
 
-interface GenerateQuery {
+export interface GenerateQuery {
   tableName: string
   query: Query
 }

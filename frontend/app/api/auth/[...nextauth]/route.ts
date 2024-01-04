@@ -1,6 +1,7 @@
 import NextAuth, { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import jwtDecode from 'jwt-decode'
+import moment from 'moment'
 
 export const authOptions = {
   providers: [
@@ -38,6 +39,19 @@ export const authOptions = {
       return { ...data.token, ...data.user }
     },
     async session({ session, token }) {
+      // @ts-ignore
+      const tokenDecoded: {
+        user_id: number
+        full_name: string
+        created_at: string
+        email: string
+        exp: number
+      } = jwtDecode(token.access_token)
+
+      if (moment() > moment.unix(tokenDecoded.exp)) {
+        throw new Error('Token expired.')
+      }
+
       session.user = token
       return session
     },

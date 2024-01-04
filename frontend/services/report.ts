@@ -11,18 +11,18 @@ export const reportsApi = baseApi.injectEndpoints({
       }),
     }),
 
-    detail: builder.query<Report, number>({
+    reportDetail: builder.query<Report, number>({
       query: (report_id) => ({
         url: 'report/detail',
         params: { report_id },
       }),
     }),
 
-    list: builder.query<Report[], any>({
+    listReports: builder.query<Report[], null>({
       query: () => 'report/list',
     }),
 
-    delete: builder.mutation<any, number>({
+    deleteReport: builder.mutation<any, number>({
       query: (report_id) => ({
         url: 'report/delete',
         params: { report_id },
@@ -34,7 +34,7 @@ export const reportsApi = baseApi.injectEndpoints({
 
 export const {
   useAddReportMutation,
-  useLazyDetailQuery,
-  useListQuery,
-  useDeleteMutation,
+  useLazyListReportsQuery,
+  useListReportsQuery,
+  useDeleteReportMutation,
 } = reportsApi
