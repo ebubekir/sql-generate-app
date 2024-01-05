@@ -17,6 +17,7 @@ class Query(BaseModel):
     selections: List[Expression] = Field(default=None)
     conditions: Union["WhereGroup", "WhereClause"] = Field(default=None)
     inner_joins: List[InnerJoin] = Field(default=None)
+    group_by: Expression = Field(default=None)
 
     def render(self, t, return_query: bool = False):
         if self.selections:
@@ -28,6 +29,9 @@ class Query(BaseModel):
 
         if self.conditions:
             q = q.where(self.conditions.render(t))
+
+        if self.group_by:
+            q = q.group_by(self.group_by.render(t))
 
         if self.inner_joins:
             for join in self.inner_joins:

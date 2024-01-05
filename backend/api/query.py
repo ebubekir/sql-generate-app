@@ -11,7 +11,6 @@ router = create_router(auth=True)
 async def generate_query(
     request: Request, query: GenerateQueryDto, data_source_id: int = None
 ):
-    time.sleep(3)
     service = QueryService(
         user=request.user, query=query, data_source_id=data_source_id
     )
