@@ -1,11 +1,11 @@
 import { useGenerateQueryMutation } from '@/services/query'
 import Loading from '@/app/(dashboard)/components/Loading'
-import SqlTextResult from '@/app/(dashboard)/new-report/components/Result/SqlTextResult'
+import SqlTextResult from '@/app/(dashboard)/components/Result/SqlTextResult'
 import { ExclamationTriangleIcon, SquaresPlusIcon } from '@heroicons/react/20/solid'
-import LineResult from '@/app/(dashboard)/new-report/components/Result/LineResult'
-import PieResult from '@/app/(dashboard)/new-report/components/Result/PieResult'
-import BarResult from '@/app/(dashboard)/new-report/components/Result/BarResult'
-import TableResult from '@/app/(dashboard)/new-report/components/Result/TableResult'
+import LineResult from '@/app/(dashboard)/components/Result/LineResult'
+import PieResult from '@/app/(dashboard)/components/Result/PieResult'
+import BarResult from '@/app/(dashboard)/components/Result/BarResult'
+import TableResult from '@/app/(dashboard)/components/Result/TableResult'
 import { useReportReducer } from '@/app/(dashboard)/new-report/reducer'
 import { ReportType } from '@/types/report'
 
@@ -29,12 +29,12 @@ const ResultMapping = {
   TABLE: TableResult
 }
 
-const ResultRenderer = ({ type } : {type?: ReportType}) => {
+export const ResultRenderer = ({ type, data } : {type?: ReportType, data: any}) => {
   if (!type) {
-    return <SqlTextResult  />
+    return <SqlTextResult data={data}  />
   }
   const Component = ResultMapping[type]
-  return <Component  />
+  return <Component data={data} />
 }
 
 
@@ -56,7 +56,7 @@ const Result = () => {
 
 
   return <div className="flex justify-center items-center w-full  bg-gray-100 rounded-md">
-    <Component type={reportType} />
+    <Component type={reportType} data={result.data} />
   </div>
 }
 

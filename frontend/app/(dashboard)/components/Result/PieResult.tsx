@@ -1,14 +1,8 @@
 'use client'
 
-import { useGenerateQueryMutation } from '@/services/query'
 import EChartsReact from 'echarts-for-react'
 
-const PieResult = () => {
-  const [, result] = useGenerateQueryMutation({
-    fixedCacheKey: 'query-result',
-  })
-  const { data } = result
-
+const PieResult = ({ data }: { data: { [countKey: string]: string | number }[] }) => {
   return (
     <div className='h-[500px] w-full p-0'>
       <EChartsReact
@@ -42,7 +36,6 @@ const PieResult = () => {
               },
               data:
                 data &&
-                // @ts-ignore
                 data.map((item) => ({
                   name: item[Object.keys(item)[1]],
                   value: item.count_1,

@@ -1,23 +1,15 @@
-import { useGenerateQueryMutation } from '@/services/query'
 import EChartsReact from 'echarts-for-react'
 
-const BarResult = () => {
-  const [, result] = useGenerateQueryMutation({
-    fixedCacheKey: 'query-result',
-  })
-  const { data } = result
-
-  console.log('data', data)
-
+const BarResult = ({ data }: { data: { [countKey: string]: string | number }[] }) => {
   const xAxisData =
     data &&
-    // @ts-ignore
-    data?.map((row) => row[Object.keys(row).find((key) => !key.startsWith('count_'))])
+    data?.map(
+      (row) => row[Object.keys(row).find((key) => !key.startsWith('count_')) || '']
+    )
 
   const yAxisData =
     data &&
-    // @ts-ignore
-    data.map((row) => row[Object.keys(row).find((key) => key.startsWith('count_'))])
+    data.map((row) => row[Object.keys(row).find((key) => key.startsWith('count_')) || ''])
 
   return (
     <div className='h-[500px] w-full p-0'>

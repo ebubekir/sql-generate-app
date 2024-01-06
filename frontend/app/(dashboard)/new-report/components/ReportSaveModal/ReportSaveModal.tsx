@@ -9,11 +9,12 @@ import TextInput from '@/app/components/FormInputs/TextInput'
 import React, { useState } from 'react'
 import { generateQueryRequest } from '@/services/query'
 import { getCorrectConditions } from '@/app/(dashboard)/new-report/components/Condition/reducer'
-import { ReportType, SaveReport } from '@/types/report'
+import { SaveReport } from '@/types/report'
 import { useAddReportMutation } from '@/services/report'
 
 const ReportSaveModal = () => {
-  const { saveModal, tableName, columnList, joinsList } = useReportReducer()
+  const { saveModal, tableName, columnList, joinsList, reportType, reportTypeConfig } =
+    useReportReducer()
   const conditionReducer = useConditionReducer()
   const dispatch = useDispatch()
   const [inputs, setInputs] = useState<{
@@ -32,13 +33,15 @@ const ReportSaveModal = () => {
         conditions: getCorrectConditions(conditionReducer),
         columnList: columnList,
         joinsList: getCorrectJoinsList(joinsList),
+        reportType: reportType,
+        reportConfig: reportTypeConfig,
       })
 
       const report: SaveReport = {
         name: inputs.name,
         description: inputs.description,
         request_schema: requestConfig,
-        report_type: ReportType.sql,
+        report_type: reportType,
       }
       addReport(report)
     }

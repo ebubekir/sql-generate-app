@@ -12,7 +12,8 @@ export interface SaveReport {
   name: string
   description?: string | null
   request_schema: object
-  report_type: ReportType
+  report_type?: ReportType
+  report_config?: object | null
   data_source_id?: number
 }
 

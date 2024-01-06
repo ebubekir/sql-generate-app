@@ -1,10 +1,4 @@
-import { useGenerateQueryMutation } from '@/services/query'
-
-const TableResult = () => {
-  const [, result] = useGenerateQueryMutation({
-    fixedCacheKey: 'query-result',
-  })
-  const { data } = result
+const TableResult = ({ data }: { data: {[key: string]: string | number | null}[] }) => {
 
   const headers = data && Object.keys(data[0]).map((i) => i.slice(i.indexOf('.') + 1))
 
@@ -18,11 +12,9 @@ const TableResult = () => {
         </thead>
         <tbody>
           {data &&
-            // @ts-ignore
             data.map((row, index) => (
               <tr key={index} className={index % 2 === 0 ? 'hover' : ''}>
                 {Object.values(row).map((i, k) => (
-                  // @ts-ignore
                   <td key={k}>{i}</td>
                 ))}
               </tr>
