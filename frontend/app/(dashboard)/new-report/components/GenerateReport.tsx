@@ -21,6 +21,8 @@ const GenerateReport = () => {
         conditions: getCorrectConditions(conditionReducer),
         columnList: reportReducer.columnList,
         joinsList: getCorrectJoinsList(reportReducer.joinsList),
+        reportType: reportReducer.reportType,
+        reportConfig: reportReducer.reportTypeConfig,
       })
       generateQuery(query)
     }

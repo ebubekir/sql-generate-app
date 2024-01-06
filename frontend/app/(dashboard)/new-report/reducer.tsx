@@ -2,6 +2,7 @@ import { combineReducers, createReducer, PayloadAction } from '@reduxjs/toolkit/
 import { conditionReducer } from '@/app/(dashboard)/new-report/components/Condition/reducer'
 import { useAppSelector } from '@/app/store'
 import { InnerJoin, Operator } from '@/types/query'
+import { ReportType } from '@/types/report'
 
 interface ReportReducerStateSchema {
   tableName?: string
@@ -17,12 +18,16 @@ interface ReportReducerStateSchema {
     }
   }[]
   saveModal: boolean
+  reportType?: ReportType
+  reportTypeConfig: object | null
 }
 
 const initialState: ReportReducerStateSchema = {
   joinsList: [],
   tableList: [],
-  saveModal: false
+  saveModal: false,
+  reportType: ReportType.sql,
+  reportTypeConfig: null
 }
 
 export const getCorrectJoinsList = (
@@ -34,19 +39,19 @@ export const getCorrectJoinsList = (
       value?: string
     }
   }[]
-): Array<InnerJoin> =>{
+): Array<InnerJoin> => {
   const correctJoins: Array<InnerJoin> = []
 
-  joinsList.forEach(join => {
+  joinsList.forEach((join) => {
     if ('whereClause' in join) {
-      if(join.tableName && join.whereClause?.col && join?.whereClause?.value) {
+      if (join.tableName && join.whereClause?.col && join?.whereClause?.value) {
         correctJoins.push({
           table_name: join.tableName,
           where_clause: {
-            col: { col: join.whereClause.col},
+            col: { col: join.whereClause.col },
             op: Operator.eq,
-            value : { col: join.whereClause.value}
-          }
+            value: { col: join.whereClause.value },
+          },
         })
       }
     }
@@ -139,6 +144,21 @@ export const reportReducer = createReducer(initialState, (builder) => {
     )
     .addCase('toggleSaveModal', (state) => {
       state.saveModal = !state.saveModal
+    })
+    .addCase(
+      'dispatchReportType',
+      (
+        state,
+        action: PayloadAction<
+          { type: string; reportType: ReportType },
+          'dispatchReportType'
+        >
+      ) => {
+        state.reportType = action.payload.reportType
+      }
+    )
+    .addCase('dispatchReportConfig', (state, action: PayloadAction<{ type: string, reportTypeConfig: object }, 'dispatchReportConfig'>) => {
+      state.reportTypeConfig = action.payload.reportTypeConfig
     })
 })
 

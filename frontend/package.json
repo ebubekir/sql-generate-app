@@ -16,6 +16,8 @@
     "@types/react-date-range": "^1.4.9",
     "@types/react-datepicker": "^4.19.4",
     "axios": "^1.5.1",
+    "echarts": "^5.4.3",
+    "echarts-for-react": "^3.0.2",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.4",
     "next": "13.5.4",

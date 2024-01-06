@@ -8,10 +8,13 @@ import {
   WhereClause,
   WhereGroup,
 } from '@/types/query'
+import { ReportType } from '@/types/report'
 
 export interface GenerateQuery {
   tableName: string
   query: Query
+  reportType?: ReportType
+  reportConfig?: object | null
 }
 
 export const generateQueryRequest = ({
@@ -19,6 +22,8 @@ export const generateQueryRequest = ({
   columnList,
   conditions,
   joinsList,
+  reportType,
+  reportConfig
 }: {
   tableName: string
   columnList?: string[]
@@ -29,7 +34,9 @@ export const generateQueryRequest = ({
       value: string | number | boolean | Array<string | number | boolean>
     }
   }
-  joinsList: Array<InnerJoin>
+  joinsList: Array<InnerJoin>,
+  reportType?: ReportType
+  reportConfig?: object | null
 }): GenerateQuery => {
   let whereGroup: WhereGroup | undefined = undefined
   let selections: Array<Expression> | undefined = undefined
@@ -77,6 +84,7 @@ export const generateQueryRequest = ({
       selections,
       inner_joins: innerJoins
     },
+    reportType, reportConfig
   }
 }
 
@@ -89,6 +97,8 @@ export const queryApi = baseApi.injectEndpoints({
         body: {
           tableName: query.tableName,
           query: query.query,
+          reportType: query.reportType,
+          reportConfig: query.reportConfig
         },
       }),
       async onQueryStarted(_, { dispatch, queryFulfilled }) {

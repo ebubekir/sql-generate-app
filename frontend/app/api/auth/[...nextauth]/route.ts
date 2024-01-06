@@ -46,6 +46,7 @@ export const authOptions = {
         created_at: string
         email: string
         exp: number
+        // @ts-ignore
       } = jwtDecode(token.access_token)
 
       if (moment() > moment.unix(tokenDecoded.exp)) {

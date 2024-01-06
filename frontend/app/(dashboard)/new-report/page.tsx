@@ -7,6 +7,8 @@ import Result from '@/app/(dashboard)/new-report/components/Result/Result'
 import ColumnSelection from '@/app/(dashboard)/new-report/components/ColumnSelection'
 import ReportSaveModal from '@/app/(dashboard)/new-report/components/ReportSaveModal/ReportSaveModal'
 import SaveModalBtn from '@/app/(dashboard)/new-report/components/ReportSaveModal/SaveModalBtn'
+import ReportTypeSelection from '@/app/(dashboard)/new-report/components/ReportTypeSelection'
+import ReportTypeConfig from '@/app/(dashboard)/new-report/components/ReportTypeConfig/ReportTypeConfig'
 
 const NewReportPage = () => {
   return (
@@ -15,6 +17,8 @@ const NewReportPage = () => {
         <TableList />
         <ColumnSelection />
         <ConditionList />
+        <ReportTypeSelection />
+        <ReportTypeConfig />
         <GenerateReport />
         <SaveModalBtn />
       </div>
