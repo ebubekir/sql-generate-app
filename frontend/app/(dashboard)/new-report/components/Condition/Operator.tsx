@@ -3,8 +3,9 @@ import { useDispatch } from 'react-redux'
 import { useConditionReducer } from '@/app/(dashboard)/new-report/reducer'
 
 const Operator = ({ id }: { id: number }) => {
-  const { availableOperators } = useConditionReducer()[id]
+  const { availableOperators, col, colType } = useConditionReducer()[id]
   const dispatch = useDispatch()
+  console.log('colType', col, colType)
 
   return (
     <div className='w-2/3'>

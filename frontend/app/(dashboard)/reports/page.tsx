@@ -11,7 +11,7 @@ const ReportsPage = () => {
     <div>
       <div className='overflow-x-auto'>
         <ResultRender result={{ isLoading, error }}>
-          <div>
+          <div className='grid grid-cols-2 gap-4'>
             {data?.length &&
               data.length > 0 &&
               data.map((report, index) => <ReportBox key={index} report={report} />)}

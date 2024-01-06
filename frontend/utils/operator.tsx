@@ -52,11 +52,26 @@ const OP_LIST = {
       value: Operator.between
     },
     ...COMMON_OPERATORS
+  ],
+  DATE: [
+    {
+      label: "between",
+      value: Operator.between
+    },
+    ...COMMON_OPERATORS
+  ],
+  DATETIME: [
+    {
+      label: "between",
+      value: Operator.between
+    },
+    ...COMMON_OPERATORS
   ]
-
 }
 
 export default function getAvailableOperators(type: string): Array<any> {
+  type = type.slice(0, type.indexOf("(") === -1 ? undefined : type.indexOf("("))
+  console.log('date', type)
   if (Object.keys(OP_LIST).includes(type)) { // @ts-ignore
     return OP_LIST[type]
   }

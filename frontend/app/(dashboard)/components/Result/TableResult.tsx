@@ -3,7 +3,7 @@ const TableResult = ({ data }: { data: {[key: string]: string | number | null}[]
   const headers = data && Object.keys(data[0]).map((i) => i.slice(i.indexOf('.') + 1))
 
   return (
-    <div className='w-full overflow-x-auto bg-white'>
+    <div className='w-full h-[500px] overflow-x-auto bg-white'>
       <table className='table '>
         <thead>
           <tr>

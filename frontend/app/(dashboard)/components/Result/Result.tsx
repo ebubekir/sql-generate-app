@@ -10,7 +10,7 @@ import { useReportReducer } from '@/app/(dashboard)/new-report/reducer'
 import { ReportType } from '@/types/report'
 
 const UnInitializedResult = () => (
-  <div className='flex flex-col items-center text-center text-gray-300'>
+  <div className='flex w-full flex-col items-center items-center justify-center text-center text-gray-300'>
     <SquaresPlusIcon className='h-16 w-16' />
     <span>You can create your report or query using the filters on the right.</span>
   </div>
@@ -55,7 +55,7 @@ const Result = () => {
   const Component = ComponentMapping[result.status]
 
 
-  return <div className="flex justify-center items-center w-full  bg-gray-100 rounded-md">
+  return <div className="flex border-2 border-primary w-full  bg-gray-100 rounded-md">
     <Component type={reportType} data={result.data} />
   </div>
 }

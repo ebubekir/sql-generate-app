@@ -1,13 +1,9 @@
 import ValueRenderer from '@/app/(dashboard)/new-report/components/Condition/Value/ValueRenderer'
 import { useDispatch } from 'react-redux'
-import {
-  useConditionReducer,
-  useReportReducer,
-} from '@/app/(dashboard)/new-report/reducer'
+import { useConditionReducer } from '@/app/(dashboard)/new-report/reducer'
 
 const Value = ({ id }: { id: number }) => {
   const { col, colType, op } = useConditionReducer()[id]
-  const { tableName } = useReportReducer()
   const dispatch = useDispatch()
   return (
     <div className='w-full'>
@@ -16,7 +12,7 @@ const Value = ({ id }: { id: number }) => {
           type={colType}
           operator={op}
           col={col}
-          tableName={tableName}
+          tableName={col?.col.slice(0, col.col.indexOf('.'))}
           onChange={(val) =>
             dispatch({
               type: 'dispatchValue',

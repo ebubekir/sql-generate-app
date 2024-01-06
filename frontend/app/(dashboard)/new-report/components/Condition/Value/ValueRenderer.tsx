@@ -7,7 +7,10 @@ const OP_COMPONENTS = {
   VARCHAR: StringValue,
   TIMESTAMP: DateValue,
   DATETIME: DateValue,
+  DATE: DateValue,
   INTEGER: NumberValue,
+  SMALLINT: NumberValue,
+  REAL: NumberValue,
 }
 
 const ValueRenderer = ({
@@ -24,6 +27,7 @@ const ValueRenderer = ({
   onChange: (val: any) => void
 }) => {
   let Component
+  type = type.slice(0, type.indexOf("(") === -1 ? undefined : type.indexOf("("))
   if (Object.keys(OP_COMPONENTS).includes(type)) {
     // @ts-ignore
     Component = OP_COMPONENTS[type]
