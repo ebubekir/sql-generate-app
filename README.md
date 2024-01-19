@@ -36,9 +36,9 @@
 
 #### 3.1 Go to backend directory.
    
-    ```bash
+```bash
         cd backend/
-    ```
+```
 
 #### 3.2 Create Poetry Environment and Install Dependencies
     
