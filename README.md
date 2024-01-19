@@ -42,20 +42,20 @@
 
 #### 3.2 Create Poetry Environment and Install Dependencies
     
-    ```bash
+```bash
        poetry shell && poetry install
-    ```
+```
    
 #### 3.3 Up Database
-    
-    ```bash
+
+```bash
        sudo docker compose up db
-    ```
+```
    
 #### 3.4 Run api project
-    ```bash
-        python main.py
-    ```
+```bash
+    python main.py
+```
 
 ### 4. Frontend Installation
 
@@ -82,9 +82,11 @@ Firstly, you need to register to log into the application.
 
 ### Add your data source
 Add your data source in data sources page.
+
 ![img.png](media/data_source_type_selection.png)
 
 Add your connection details
+
 ![img.png](media/add_connection_details.png)
 
 When it's ok. Give it a name and save.
@@ -92,18 +94,23 @@ When it's ok. Give it a name and save.
 ### Create a Query
 
 Select your table.
+
 ![img.png](media/table_selection.png)
 
 Also if you want, you can join your tables with ADD JOIN button.
+
 ![img.png](media/join_option.png)
 
 Select columns.
+
 ![img.png](media/select_columns.png)
 
 You can add conditions with conditions panel.
+
 ![img.png](media/conditon.png)
 
 Then go create a Query!
+
 ![img.png](media/sql_query_result.png)
 ---
 
