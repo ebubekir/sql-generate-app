@@ -23,13 +23,13 @@
 ### 1. Clone the project
 
 ```bash
-    git clone https://github.com/ebubekir/sql-generate-app
+git clone https://github.com/ebubekir/sql-generate-app
 ```
 
 ### 2. Go to path
 
 ```bash
-    cd sql-generate-app/
+cd sql-generate-app/
 ```
 
 ### 3. Backend Installation
@@ -37,24 +37,24 @@
 #### 3.1 Go to backend directory.
    
 ```bash
-        cd backend/
+cd backend/
 ```
 
 #### 3.2 Create Poetry Environment and Install Dependencies
     
 ```bash
-       poetry shell && poetry install
+poetry shell && poetry install
 ```
    
 #### 3.3 Up Database
 
 ```bash
-       sudo docker compose up db
+sudo docker compose up db
 ```
    
 #### 3.4 Run api project
 ```bash
-    python main.py
+python main.py
 ```
 
 ### 4. Frontend Installation
@@ -62,13 +62,13 @@
 #### 4.1 Run dependencies
 
 ```bash
-    yarn install
+yarn install
 ```
 
 #### 4.2 Run project
 
 ```bash
-    yarn dev
+yarn dev
 ```
 
 ---
