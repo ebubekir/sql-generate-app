@@ -5,7 +5,6 @@ description = ""
 authors = ["Ebubekir Karanfil <karanfilebubekir@gmail.com>"]
 license = "MIT"
 readme = "README.md"
-packages = [{include = "easy_daashboards_api"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
